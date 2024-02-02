@@ -4,8 +4,8 @@ from PIL import Image
 
 sl.title("Steganographic")
 
-with sl.form("Upload the image"):
-    upload_img = sl.file_uploader("Upload")
+with sl.form("Upload your image"):
+    upload_img = sl.file_uploader("Upload your image", accept_multiple_files=False)
     input_text = sl.text_input("Enter the secret text")
     img_name = sl.text_input("Enter the secret image name")
     submit_btn = sl.form_submit_button("Hide Text")
@@ -28,3 +28,16 @@ if submit_btn:
             file_name=img_name,
             mime="image/png",
         )
+
+with sl.form("Upload the secret image"):
+    upload_img = sl.file_uploader(
+        "Upload the secret image", accept_multiple_files=False
+    )
+    submit_btn = sl.form_submit_button("Reveal secret message")
+
+sl.write("##")
+
+if submit_btn:
+    sl.write("### Your secret message is :")
+    sl.write("##")
+    sl.write(lsb.reveal(upload_img))

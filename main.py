@@ -47,24 +47,27 @@ def secret_to_text_message(sec_text):
 
 
 if submit_btn:
-    sl.write("### Your secret image")
-    new_img_name = img_name.replace(" ", "_")
-    new_img_name = new_img_name + ".png"
-    input_text = text_to_secret_message(input_text)
-    secret = lsb.hide(upload_img, input_text)
-    secret.save(new_img_name)
-    sl.image(new_img_name)
-    image = Image.open(new_img_name)
-    sl.write("##")
-
-    with open(new_img_name, "rb") as file:
-        btn = sl.download_button(
-            label="Download image",
-            data=file,
-            file_name=new_img_name,
-            mime="image/png",
-        )
+    try:
+        sl.write("### Your secret image")
+        new_img_name = img_name.replace(" ", "_")
+        new_img_name = new_img_name + ".png"
+        input_text = text_to_secret_message(input_text)
+        secret = lsb.hide(upload_img, input_text)
+        secret.save(new_img_name)
+        sl.image(new_img_name)
+        image = Image.open(new_img_name)
         sl.write("##")
+
+        with open(new_img_name, "rb") as file:
+            btn = sl.download_button(
+                label="Download image",
+                data=file,
+                file_name=new_img_name,
+                mime="image/png",
+            )
+            sl.write("##")
+    except:
+        sl.error("Upload the correct file format")
 
 
 sl.markdown("""-----""")
@@ -88,4 +91,8 @@ sl.write("##")
 
 if submit_btn:
     sl.write("### Your secret message is :")
-    sl.write(f"**{secret_to_text_message(lsb.reveal(upload_img))}**")
+    try:
+        sl.write(f"**{secret_to_text_message(lsb.reveal(upload_img))}**")
+    except:
+        sl.warning("Upload the correct secret image.")
+        sl.warning("Please read the instructions carefully.")

@@ -5,9 +5,25 @@ from PIL import Image
 sl.set_page_config(page_title="Steganographic App", page_icon="🧐")
 
 sl.title("Steganographic App")
-sl.write("##")
+
+sl.markdown(
+    """> Steganography is the practice of concealing information within other non-secret data to avoid detection. It involves embedding or hiding messages, images, or files within seemingly innocuous carriers, such as images, audio, or text, to transmit hidden information covertly. The goal is to make the presence of the concealed data imperceptible to unintended observers.
+            """
+)
+
+sl.markdown("""-----""")
 
 sl.write("### To make a secret image")
+
+sl.markdown(
+    """
+To convert your image to a secret image, follow the given steps:
+
+- upload an image that you want to steganograph.
+- enter the secret text that you want to add.
+- enter the secret file name and click the "Hide Text" button.
+"""
+)
 
 with sl.form("Upload your image"):
     upload_img = sl.file_uploader("Upload your image", accept_multiple_files=False)
@@ -48,9 +64,19 @@ if submit_btn:
             file_name=new_img_name,
             mime="image/png",
         )
+        sl.write("##")
 
-sl.write("##")
+
+sl.markdown("""-----""")
 sl.write("### To find the secret message")
+
+sl.markdown(
+    """
+> The image that you will be uploading below should have been steganographed from this website only.
+
+To find the hidden message from the secret message, upload the image below and click the "Reveal secret message" button.
+"""
+)
 
 with sl.form("Upload the secret image"):
     upload_img = sl.file_uploader(
